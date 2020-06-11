@@ -1,0 +1,27 @@
+.addTodoContainer {
+  text-align: center;
+  padding-top: 16px;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.todosContainer {
+  padding: 0;
+}
+.todosContainer li {
+  padding: 14px;
+  list-style-type: none;
+  margin: auto;
+  max-width: 80%;
+}
+.todosContainer li * {
+  padding: 14px;
+}
+span.closeButton {
+  float: right;
+  padding: 0 5px;
+}
+span.closeButton:hover {
+  background-color: gray;
+  cursor: pointer;
+}

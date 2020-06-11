@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { v4 } from "uuid";
 
 import Todo from "./Todo";
-
-const todosStyle = {
-  textAlign: "center",
-  paddingTop: "16px",
-  fontSize: "2em",
-  fontWeight: "bold",
-};
+import "./css/todos.css";
 
 export default class Todos extends Component {
   state = {
@@ -19,6 +13,7 @@ export default class Todos extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const text = this.state.value;
+    if (!text) return;
     this.setState((prevState) => ({
       todos: [...prevState.todos, { text, id: v4(), completed: false }],
       value: "",
@@ -37,11 +32,18 @@ export default class Todos extends Component {
       ),
     }));
   };
+
+  handleTodoOnClick = (id) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.filter((todo) => todo.id !== id),
+    }));
+  };
+
   render() {
     const { todos } = this.state;
     return (
-      <div style={todosStyle}>
-        <form onSubmit={this.handleSubmit}>
+      <>
+        <form className="addTodoContainer" onSubmit={this.handleSubmit}>
           <label>
             Add a new todo:
             <br />
@@ -50,16 +52,19 @@ export default class Todos extends Component {
           </label>
           <button>Add</button>
         </form>
-        <ul>
-          {todos ? (
-            todos.map((todo) => (
-              <Todo key={todo.id} {...todo} onChange={this.handleTodoChange} />
-            ))
-          ) : (
-            <li>No todos yet</li>
-          )}
+        <ul className="todosContainer">
+          {todos.length
+            ? todos.map((todo) => (
+                <Todo
+                  key={todo.id}
+                  {...todo}
+                  onChange={this.handleTodoChange}
+                  onClick={this.handleTodoOnClick}
+                />
+              ))
+            : null}
         </ul>
-      </div>
+      </>
     );
   }
 }

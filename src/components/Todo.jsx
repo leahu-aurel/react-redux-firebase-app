@@ -1,8 +1,19 @@
 import React from "react";
 
-export default ({ text, completed, id, onChange }) => (
+export default ({ text, completed, id, onChange, onClick }) => (
   <>
-    <input type="checkbox" checked={completed} onChange={() => onChange(id)} />
-    <li>{text}</li>
+    <li>
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={() => onChange(id)}
+      />
+      <span style={{ textDecoration: completed ? "line-through" : "none" }}>
+        {text}
+      </span>
+      <span className="closeButton" onClick={() => onClick(id)}>
+        x
+      </span>
+    </li>
   </>
 );
