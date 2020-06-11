@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
 import { v4 } from "uuid";
+
+import Todo from "./Todo";
 
 const todosStyle = {
   textAlign: "center",
@@ -29,9 +30,15 @@ export default class Todos extends Component {
     this.setState({ value });
   };
 
+  handleTodoChange = (id) => {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      ),
+    }));
+  };
   render() {
     const { todos } = this.state;
-    console.log(this.state);
     return (
       <div style={todosStyle}>
         <form onSubmit={this.handleSubmit}>
@@ -45,7 +52,9 @@ export default class Todos extends Component {
         </form>
         <ul>
           {todos ? (
-            todos.map((todo) => <li key={todo.id}>{todo.text}</li>)
+            todos.map((todo) => (
+              <Todo key={todo.id} {...todo} onChange={this.handleTodoChange} />
+            ))
           ) : (
             <li>No todos yet</li>
           )}
