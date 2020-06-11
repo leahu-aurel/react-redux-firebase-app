@@ -1,0 +1,30 @@
+.navbar {
+  overflow: hidden;
+  background-color: rgb(199, 190, 190);
+}
+
+.navbar a {
+  padding: 14px 16px;
+  float: left;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.navbar a.authlink {
+  float: right;
+}
+
+.navbar a:hover {
+  background-color: black;
+  color: white;
+}
+
+@media screen and (max-width: 500px) {
+  .navbar a {
+    padding: 8px 0;
+    float: none;
+    width: 100%;
+    display: block;
+  }
+}

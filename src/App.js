@@ -1,3 +1,17 @@
 import React from "react";
 
-export default () => <h1>Main App Component</h1>;
+import NavBar from "./components/NavBar";
+
+const todosStyle = {
+  textAlign: "center",
+  paddingTop: "16px",
+  fontSize: "2em",
+  fontWeight: "bold",
+};
+
+export default () => (
+  <>
+    <NavBar />
+    <div style={todosStyle}>{"Todos Component"}</div>
+  </>
+);
