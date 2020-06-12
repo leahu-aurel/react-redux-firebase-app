@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { addTodo } from "../../redux/actions/actionCreators";
+import "./add_todo.css";
 
 let AddTodoForm = ({ addTodo }) => {
   let input = React.createRef();
@@ -16,10 +18,10 @@ let AddTodoForm = ({ addTodo }) => {
       <label>
         Add a new todo:
         <br />
-        <input ref={input} />
+        <input className="addTodoInput" ref={input} />
         <br />
       </label>
-      <button>Add</button>
+      <button className="addTodoButton">Add</button>
     </form>
   );
 };

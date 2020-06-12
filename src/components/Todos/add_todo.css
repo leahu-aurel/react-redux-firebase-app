@@ -1,0 +1,29 @@
+.addTodoInput {
+  line-height: 2em;
+  width: 30%;
+}
+
+.addTodoButton {
+  line-height: 1.5em;
+  width: 15%;
+}
+
+@media screen and (max-width: 800px) {
+  .addTodoInput {
+    width: 50%;
+  }
+
+  .addTodoButton {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .addTodoInput {
+    width: 80%;
+  }
+
+  .addTodoButton {
+    width: 40%;
+  }
+}

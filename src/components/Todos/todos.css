@@ -12,7 +12,7 @@
   padding: 14px;
   list-style-type: none;
   margin: auto;
-  max-width: 80%;
+  max-width: 40%;
 }
 .todosContainer li * {
   padding: 14px;
@@ -24,4 +24,21 @@ span.closeButton {
 span.closeButton:hover {
   background-color: gray;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1200px) {
+  .todosContainer li {
+    max-width: 60%;
+  }
+}
+@media screen and (max-width: 800px) {
+  .todosContainer li {
+    max-width: 80%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .todosContainer li {
+    max-width: 100%;
+  }
 }
