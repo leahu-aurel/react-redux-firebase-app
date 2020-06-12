@@ -1,20 +1,20 @@
 .addTodoInput {
   line-height: 2em;
-  width: 30%;
+  width: 40%;
 }
 
 .addTodoButton {
   line-height: 1.5em;
-  width: 15%;
+  width: 25%;
 }
 
 @media screen and (max-width: 800px) {
   .addTodoInput {
-    width: 50%;
+    width: 60%;
   }
 
   .addTodoButton {
-    width: 25%;
+    width: 30%;
   }
 }
 
