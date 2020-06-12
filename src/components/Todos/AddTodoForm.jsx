@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTodo } from "../redux/actions/actionCreators";
+import { addTodo } from "../../redux/actions/actionCreators";
 
 let AddTodoForm = ({ addTodo }) => {
   let input = React.createRef();
 
   const submitHandle = (e) => {
     e.preventDefault();
-    addTodo(input.current.value);
+    input.current.value.trim() && addTodo(input.current.value);
     input.current.value = "";
   };
 

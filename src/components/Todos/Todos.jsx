@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 
 import Todo from "./Todo";
 import AddTodoForm from "./AddTodoForm";
-import VisibilityFilter from "./VisibilityFilter";
-import "./css/todos.css";
-import getVisibleTodos from "../utils/getVisibleTodos";
+import VisibilityFilter from "../Filter/VisibilityFilter";
+import "./todos.css";
+import getVisibleTodos from "../../utils/getVisibleTodos";
 
 let Todos = ({ todos }) => {
   return (

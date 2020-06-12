@@ -1,5 +1,5 @@
 import React from "react";
-import { removeTodo, toggleTodo } from "../redux/actions/actionCreators";
+import { removeTodo, toggleTodo } from "../../redux/actions/actionCreators";
 import { connect } from "react-redux";
 
 let Todo = ({ text, completed, id, removeTodo, toggleTodo }) => (

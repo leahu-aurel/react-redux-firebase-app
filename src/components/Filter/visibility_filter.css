@@ -1,0 +1,18 @@
+.filterContainer {
+  text-align: center;
+  margin: auto;
+}
+span {
+  padding-left: 5px;
+}
+.filter {
+  color: red;
+}
+.filter:hover {
+  cursor: pointer;
+  color: hotpink;
+}
+
+.activeFilter {
+  color: black;
+}
