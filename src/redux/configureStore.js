@@ -1,9 +1,10 @@
 import { createStore, combineReducers } from "redux";
 
 import todos from "./reducers/todosReducer";
+import visibilityFilter from "./reducers/visibilityFilterReducer";
 
-const appReducer = combineReducers({ todos });
+const mainReducer = combineReducers({ todos, visibilityFilter });
 
-const store = createStore(appReducer);
+const store = createStore(mainReducer);
 
 export default store;

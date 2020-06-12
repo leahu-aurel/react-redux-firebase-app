@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import Todo from "./Todo";
 import AddTodoForm from "./AddTodoForm";
+import VisibilityFilter from "./VisibilityFilter";
 import "./css/todos.css";
+import getVisibleTodos from "../utils/getVisibleTodos";
 
 let Todos = ({ todos }) => {
   return (
@@ -13,9 +16,10 @@ let Todos = ({ todos }) => {
           ? todos.map((todo) => <Todo key={todo.id} {...todo} />)
           : null}
       </ul>
+      <VisibilityFilter />
     </>
   );
 };
-Todos = connect((state) => state)(Todos);
+Todos = connect((state) => getVisibleTodos(state))(Todos);
 
 export default Todos;
