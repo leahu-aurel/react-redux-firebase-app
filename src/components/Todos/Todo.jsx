@@ -1,25 +1,41 @@
 import React from "react";
-import { removeTodo, toggleTodo } from "../../redux/actions/actionCreators";
+import {
+  removeTodoOnServer,
+  toggleTodoOnServer,
+} from "../../redux/actions/actionCreators";
 import { connect } from "react-redux";
 
-let Todo = ({ text, completed, id, removeTodo, toggleTodo }) => (
+let Todo = ({
+  user,
+  text,
+  completed,
+  id,
+  removeTodoOnServer,
+  toggleTodoOnServer,
+}) => (
   <>
     <li>
       <input
         type="checkbox"
         checked={completed}
-        onChange={() => toggleTodo(id)}
+        onChange={() => toggleTodoOnServer(user.uid, id, completed)}
       />
       <span style={{ textDecoration: completed ? "line-through" : "none" }}>
         {text}
       </span>
-      <span className="closeButton" onClick={() => removeTodo(id)}>
+      <span
+        className="closeButton"
+        onClick={() => removeTodoOnServer(user.uid, id)}
+      >
         x
       </span>
     </li>
   </>
 );
 
-Todo = connect((state) => state, { removeTodo, toggleTodo })(Todo);
+Todo = connect(({ user }) => ({ user }), {
+  removeTodoOnServer,
+  toggleTodoOnServer,
+})(Todo);
 
 export default Todo;

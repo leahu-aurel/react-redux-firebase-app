@@ -5,13 +5,13 @@ import {
   SET_TODOS,
 } from "../actions/actions";
 
-export default (state = [], { type, text, id, todos }) => {
+export default (state = [], { type, text, id, todos, todo }) => {
   switch (type) {
     case SET_TODOS:
       console.log(todos);
       return todos;
     case ADD_TODO:
-      return [...state, { text, id: id, completed: false }];
+      return [...state, todo];
     case REMOVE_TODO:
       return state.filter((todo) => todo.id !== id);
     case TOGGLE_TODO:

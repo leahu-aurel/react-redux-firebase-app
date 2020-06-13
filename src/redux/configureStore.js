@@ -1,11 +1,7 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import { rootReducer } from "./reducers/rootReducer";
 
-import todos from "./reducers/todosReducer";
-import visibilityFilter from "./reducers/visibilityFilterReducer";
-import user from "./reducers/userReducer";
-
-export const mainReducer = combineReducers({ todos, visibilityFilter, user });
-
-const store = createStore(mainReducer);
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export default store;

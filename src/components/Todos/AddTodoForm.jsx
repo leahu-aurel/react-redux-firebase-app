@@ -1,15 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { addTodo } from "../../redux/actions/actionCreators";
+import { addTodoOnServer } from "../../redux/actions/actionCreators";
 import "./add_todo.css";
 
-let AddTodoForm = ({ addTodo, user }) => {
+let AddTodoForm = ({ addTodoOnServer, user }) => {
   let input = React.createRef();
 
   const submitHandle = (e) => {
     e.preventDefault();
-    input.current.value.trim() && addTodo(input.current.value);
+    input.current.value.trim() &&
+      addTodoOnServer(input.current.value, user.uid);
     input.current.value = "";
   };
 
@@ -25,6 +26,8 @@ let AddTodoForm = ({ addTodo, user }) => {
     </form>
   );
 };
-AddTodoForm = connect(({ user }) => ({ user }), { addTodo })(AddTodoForm);
+AddTodoForm = connect(({ user }) => ({ user }), { addTodoOnServer })(
+  AddTodoForm
+);
 
 export default AddTodoForm;

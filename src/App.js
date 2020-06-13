@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { db } from "./base";
 
 import NavBar from "./components/Navbar/NavBar";
 import Todos from "./components/Todos/Todos";
@@ -9,26 +8,11 @@ import SignIn from "./components/Auth/SignIn";
 import SignUp from "./components/Auth/SignUp";
 import SignOut from "./components/Auth/SignOut";
 import About from "./components/About/About";
-import { setTodos } from "./redux/actions/actionCreators";
-let App = ({ user, setTodos }) => {
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+import { fetchTodos } from "./redux/actions/actionCreators";
+let App = ({ user, fetchTodos }) => {
   useEffect(() => {
-    const userCollection = db
-      .collection("users")
-      .doc(user.uid)
-      .collection("todos");
-    const todos = [];
-    async function fetchData() {
-      const docs = await userCollection.get();
-      docs.forEach((doc) => {
-        todos.push(doc.data());
-      });
-    }
-    fetchData();
-    setTodos(todos);
-    forceUpdate();
-  }, [setTodos, user.uid]);
+    fetchTodos(user.uid);
+  }, [user.uid, fetchTodos]);
   return (
     <>
       <NavBar />
@@ -53,6 +37,6 @@ let App = ({ user, setTodos }) => {
   );
 };
 
-App = connect(({ user }) => ({ user }), { setTodos })(App);
+App = connect(({ user }) => ({ user }), { fetchTodos })(App);
 
 export default App;
