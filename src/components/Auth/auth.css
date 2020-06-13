@@ -1,0 +1,17 @@
+input {
+  width: 200px;
+  display: block;
+  margin-top: 5px;
+  margin: auto;
+  padding: 2px;
+}
+
+.authContainer {
+  line-height: 1.5em;
+  text-align: center;
+}
+
+.buttonContainer {
+  width: 100px;
+  margin-top: 5px;
+}
