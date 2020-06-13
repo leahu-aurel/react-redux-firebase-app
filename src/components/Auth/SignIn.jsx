@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
 import firebase from "../../base";
+import { signIn } from "../../redux/actions/actionCreators";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import "./auth.css";
-let SignIn = ({ history }) => {
+let SignIn = ({ history, user, signIn }) => {
   let login = useRef();
   let password = useRef();
   const submitHandle = (e) => {
@@ -12,7 +14,7 @@ let SignIn = ({ history }) => {
       .auth()
       .signInWithEmailAndPassword(login.current.value, password.current.value)
       .then(({ user }) => {
-        localStorage.setItem("isSignedIn", user.email);
+        signIn(user);
         history.push("/");
       })
       .catch((error) => console.log(error));
@@ -37,6 +39,6 @@ let SignIn = ({ history }) => {
   );
 };
 
-SignIn = withRouter(SignIn);
+SignIn = withRouter(connect(null, { signIn })(SignIn));
 
 export default SignIn;

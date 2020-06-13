@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { connect } from "react-redux";
 import "./navbar.css";
 
-export default () => {
-  const email = localStorage.getItem("isSignedIn");
-  console.log(email);
+let NavBar = ({ user }) => {
+  console.log(user);
   return (
     <div className="navbar">
       <Link to="/home">Todos Logo</Link>
       <Link to="/home">Home</Link>
       <Link to="/about">About</Link>
-      {email ? (
+      {user ? (
         <Link to="/sign_out" className="authlink">
           Sign out
         </Link>
@@ -28,3 +27,6 @@ export default () => {
     </div>
   );
 };
+
+NavBar = connect(({ user }) => ({ user }))(NavBar);
+export default NavBar;

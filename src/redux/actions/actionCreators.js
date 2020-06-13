@@ -3,6 +3,8 @@ import {
   REMOVE_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
+  SIGN_IN,
+  SIGN_OUT,
 } from "./actions";
 
 export const addTodo = (text) => ({
@@ -23,4 +25,13 @@ export const removeTodo = (id) => ({
 export const setVisibilityFilter = (filter) => ({
   type: SET_VISIBILITY_FILTER,
   filter,
+});
+
+export const signIn = (user) => ({
+  type: SIGN_IN,
+  user,
+});
+
+export const signOut = () => ({
+  type: SIGN_OUT,
 });
