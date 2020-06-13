@@ -1,3 +1,16 @@
 import React from "react";
 
-export default () => <h1>Sign Out page</h1>;
+import { Redirect } from "react-router-dom";
+import firebase from "../../base";
+export default () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      localStorage.removeItem("isSignedIn");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return <Redirect to="/sign_in" />;
+};

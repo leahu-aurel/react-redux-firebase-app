@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import firebase from "../../base";
+import { withRouter } from "react-router-dom";
 
 import "./auth.css";
-
-export default () => {
+let SignIn = ({ history }) => {
   let login = useRef();
   let password = useRef();
   const submitHandle = (e) => {
@@ -12,8 +12,8 @@ export default () => {
       .auth()
       .signInWithEmailAndPassword(login.current.value, password.current.value)
       .then(({ user }) => {
-        console.log(user);
-        console.log(localStorage.setItem("isSignedIn", user.email));
+        localStorage.setItem("isSignedIn", user.email);
+        history.push("/");
       })
       .catch((error) => console.log(error));
   };
@@ -36,3 +36,7 @@ export default () => {
     </div>
   );
 };
+
+SignIn = withRouter(SignIn);
+
+export default SignIn;
