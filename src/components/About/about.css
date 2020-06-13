@@ -1,0 +1,12 @@
+div.aboutContainer {
+  padding-left: 10%;
+}
+div.aboutContainer li {
+  list-style-type: "→ ";
+}
+
+@media screen and (max-width: 500px) {
+  div.aboutContainer {
+    padding-left: 5%;
+  }
+}

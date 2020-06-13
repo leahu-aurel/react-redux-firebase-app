@@ -1,17 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./navbar.css";
 
 export default () => (
   <div className="navbar">
-    <a href="#Home">Todos logo</a>
-    <a href="#Home">Home</a>
-    <a href="#About">About</a>
-    <a href="#Sign in" className="authlink">
+    <Link to="/home">Todos Logo</Link>
+    <Link to="/home">Home</Link>
+    <Link to="/about">About</Link>
+    <Link to="/sign_in" className="authlink">
       Sign in
-    </a>
-    <a href="#Sign up" className="authlink">
+    </Link>
+    <Link to="/sign_up" className="authlink">
       Sign up
-    </a>
+    </Link>
   </div>
 );
