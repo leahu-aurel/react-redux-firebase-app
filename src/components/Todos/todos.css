@@ -25,6 +25,12 @@ span.closeButton:hover {
   background-color: gray;
   cursor: pointer;
 }
+.unauthorized {
+  text-align: center;
+}
+.linkToSignIn {
+  text-decoration: none;
+}
 
 @media screen and (max-width: 1200px) {
   .todosContainer li {

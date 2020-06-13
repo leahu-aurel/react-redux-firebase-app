@@ -4,11 +4,10 @@ import { connect } from "react-redux";
 import "./navbar.css";
 
 let NavBar = ({ user }) => {
-  console.log(user);
   return (
     <div className="navbar">
       <Link to="/home">Todos Logo</Link>
-      <Link to="/home">Home</Link>
+      <Link to="/home">Your todos</Link>
       <Link to="/about">About</Link>
       {user ? (
         <Link to="/sign_out" className="authlink">
@@ -29,4 +28,5 @@ let NavBar = ({ user }) => {
 };
 
 NavBar = connect(({ user }) => ({ user }))(NavBar);
+
 export default NavBar;

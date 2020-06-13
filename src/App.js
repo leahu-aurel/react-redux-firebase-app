@@ -8,7 +8,6 @@ import SignOut from "./components/Auth/SignOut";
 import About from "./components/About/About";
 
 export default () => {
-  console.log(localStorage.getItem("isSignedIn"));
   return (
     <>
       <NavBar />
