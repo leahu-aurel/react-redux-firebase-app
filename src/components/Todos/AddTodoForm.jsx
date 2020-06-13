@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addTodo } from "../../redux/actions/actionCreators";
 import "./add_todo.css";
 
-let AddTodoForm = ({ addTodo }) => {
+let AddTodoForm = ({ addTodo, user }) => {
   let input = React.createRef();
 
   const submitHandle = (e) => {
@@ -25,6 +25,6 @@ let AddTodoForm = ({ addTodo }) => {
     </form>
   );
 };
-AddTodoForm = connect(null, { addTodo })(AddTodoForm);
+AddTodoForm = connect(({ user }) => ({ user }), { addTodo })(AddTodoForm);
 
 export default AddTodoForm;

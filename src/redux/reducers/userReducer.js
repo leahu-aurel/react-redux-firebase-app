@@ -1,11 +1,10 @@
 import { SIGN_IN, SIGN_OUT } from "../actions/actions";
-
-const initialState = localStorage.getItem("isSignedIn");
+const initialState = JSON.parse(localStorage.getItem("isSignedIn"));
 
 export default (state = initialState, { type, user }) => {
   switch (type) {
     case SIGN_IN:
-      localStorage.setItem("isSignedIn", user);
+      localStorage.setItem("isSignedIn", JSON.stringify(user));
       return user;
     case SIGN_OUT:
       localStorage.removeItem("isSignedIn");

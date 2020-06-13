@@ -14,4 +14,14 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+export const db = firebase.firestore();
+
+// db.collection("todos")
+//   .get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+//     });
+//   });
+
 export default firebase;

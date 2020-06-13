@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import "./auth.css";
-let SignIn = ({ history, user, signIn }) => {
+let SignIn = ({ history, signIn }) => {
   let login = useRef();
   let password = useRef();
   const submitHandle = (e) => {
