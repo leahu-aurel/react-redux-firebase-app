@@ -1,10 +1,21 @@
 import React, { useRef } from "react";
+import firebase from "../../base";
+
 import "./auth.css";
+
 export default () => {
   let login = useRef();
   let password = useRef();
   const submitHandle = (e) => {
     e.preventDefault();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(login.current.value, password.current.value)
+      .then(({ user }) => {
+        console.log(user);
+        console.log(localStorage.setItem("isSignedIn", user.email));
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <div className="authContainer">
