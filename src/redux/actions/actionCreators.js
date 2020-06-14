@@ -10,28 +10,42 @@ import {
 
 import { v4 } from "uuid";
 import { db } from "../../base";
-export const addTodo = (todo) => ({
-  type: ADD_TODO,
-  todo,
-});
+
+export const addTodo = (todo) => {
+  if (typeof todo === "string") {
+    todo = {
+      text: todo,
+      id: v4(),
+      completed: false,
+    };
+  }
+  console.log(todo);
+  return {
+    type: ADD_TODO,
+    todo,
+  };
+};
+
 export const toggleTodo = (id) => ({
   type: TOGGLE_TODO,
   id,
 });
+
 export const removeTodo = (id) => ({
   type: REMOVE_TODO,
   id,
 });
+
 export const setTodos = (todos) => ({
   type: SET_TODOS,
   todos,
 });
 
-export const fetchTodos = (userId) => {
+export const fetchTodos = (user) => {
   return (dispatch) => {
     const userCollection = db
       .collection("users")
-      .doc(userId)
+      .doc(user.uid)
       .collection("todos");
     userCollection.get().then((info) => {
       const todos = info.docs.map((doc) => doc.data());
@@ -40,22 +54,26 @@ export const fetchTodos = (userId) => {
   };
 };
 
-export const addTodoOnServer = (text, userId) => {
+export const addTodoOnServer = (text, user) => {
   const todo = {
     text,
     id: v4(),
     completed: false,
   };
-  return (dispatch) => {
-    const userCollection = db
-      .collection("users")
-      .doc(userId)
-      .collection("todos");
-    userCollection
-      .doc(todo.id)
-      .set(todo)
-      .then(() => dispatch(addTodo(todo)));
-  };
+  if (user) {
+    return (dispatch) => {
+      const userCollection = db
+        .collection("users")
+        .doc(user.uid)
+        .collection("todos");
+      userCollection
+        .doc(todo.id)
+        .set(todo)
+        .then(() => dispatch(addTodo(todo)));
+    };
+  } else {
+    addTodo(todo);
+  }
 };
 
 export const removeTodoOnServer = (userId, todoId) => {
@@ -70,6 +88,7 @@ export const removeTodoOnServer = (userId, todoId) => {
       .then(() => dispatch(removeTodo(todoId)));
   };
 };
+
 export const toggleTodoOnServer = (userId, todoId, completed) => {
   return (dispatch) => {
     console.log(userId);
@@ -96,6 +115,12 @@ export const signIn = (user) => ({
   user,
 });
 
-export const signOut = () => ({
-  type: SIGN_OUT,
-});
+export const signOut = () => {
+  const signOutAction = {
+    type: SIGN_OUT,
+  };
+  return (dispatch) => {
+    dispatch(signOutAction);
+    dispatch(setTodos({}));
+  };
+};

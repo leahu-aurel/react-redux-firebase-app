@@ -11,8 +11,8 @@ import About from "./components/About/About";
 import { fetchTodos } from "./redux/actions/actionCreators";
 let App = ({ user, fetchTodos }) => {
   useEffect(() => {
-    fetchTodos(user.uid);
-  }, [user.uid, fetchTodos]);
+    user && fetchTodos(user);
+  }, [user, fetchTodos]);
   return (
     <>
       <NavBar />

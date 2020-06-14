@@ -5,10 +5,9 @@ import {
   SET_TODOS,
 } from "../actions/actions";
 
-export default (state = [], { type, text, id, todos, todo }) => {
+export default (state = [], { type, id, todos, todo }) => {
   switch (type) {
     case SET_TODOS:
-      console.log(todos);
       return todos;
     case ADD_TODO:
       return [...state, todo];

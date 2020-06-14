@@ -14,7 +14,7 @@ let SignOut = ({ signOut }) => {
     .catch((error) => {
       console.log(error);
     });
-  return <Redirect to="/sign_in" />;
+  return <Redirect to="/home" />;
 };
 
 SignOut = connect(null, { signOut })(SignOut);
