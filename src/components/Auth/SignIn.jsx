@@ -1,11 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import firebase from "../../base";
 import { signIn } from "../../redux/actions/actionCreators";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import Error from "./Error";
 import "./auth.css";
+
 let SignIn = ({ history, signIn }) => {
+  const [error, setError] = useState("");
+
   let login = useRef();
   let password = useRef();
   const submitHandle = (e) => {
@@ -17,7 +20,7 @@ let SignIn = ({ history, signIn }) => {
         signIn(user);
         history.push("/");
       })
-      .catch((error) => console.log(error));
+      .catch(({ message }) => setError(message));
   };
   return (
     <div className="authContainer">
@@ -34,6 +37,7 @@ let SignIn = ({ history, signIn }) => {
         </label>
         <br />
         <button className="buttonContainer">Log in</button>
+        <Error error={error} />
       </form>
     </div>
   );

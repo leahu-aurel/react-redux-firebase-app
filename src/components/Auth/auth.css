@@ -15,3 +15,8 @@
   width: 100px;
   margin-top: 5px;
 }
+
+.errorMessage {
+  color: red;
+  padding-top: 12px;
+}

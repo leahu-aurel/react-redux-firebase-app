@@ -1,8 +1,11 @@
-import React, { useRef } from "react";
-
+import React, { useRef, useState } from "react";
+import { withRouter } from "react-router-dom";
 import firebase from "../../base";
 import "./auth.css";
-export default () => {
+import Error from "./Error";
+
+let SignUp = ({ history }) => {
+  const [error, setError] = useState("");
   let email = useRef();
   let password = useRef();
   let password2 = useRef();
@@ -16,10 +19,12 @@ export default () => {
           email.current.value,
           password.current.value
         )
-        .then()
-        .catch(function (error) {
-          console.log(error.message);
+        .then(() => history.push("/"))
+        .catch(({ message }) => {
+          setError(message);
         });
+    } else {
+      setError("Passwords don't match");
     }
   };
   return (
@@ -42,8 +47,13 @@ export default () => {
           <input ref={password2} type="password" />
         </label>
         <br />
-        <button className="buttonContainer">Log in</button>
+        <button className="buttonContainer">Sign Up</button>
+        <Error error={error} />
       </form>
     </div>
   );
 };
+
+SignUp = withRouter(SignUp);
+
+export default SignUp;
