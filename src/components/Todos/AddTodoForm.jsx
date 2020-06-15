@@ -1,16 +1,17 @@
 import React, { useRef } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addTodoOnServer } from "../../redux/actions/actionCreators";
 import "./add_todo.css";
 
-let AddTodoForm = ({ addTodoOnServer, user }) => {
+export default () => {
   let input = useRef();
+  const dispatch = useDispatch();
 
   const submitHandle = (e) => {
     e.preventDefault();
     const trimmedInput = input.current.value.trim();
-    trimmedInput && addTodoOnServer(input.current.value, user);
+    trimmedInput && dispatch(addTodoOnServer(input.current.value));
     input.current.value = "";
   };
 
@@ -26,8 +27,3 @@ let AddTodoForm = ({ addTodoOnServer, user }) => {
     </form>
   );
 };
-AddTodoForm = connect(({ user }) => ({ user }), { addTodoOnServer })(
-  AddTodoForm
-);
-
-export default AddTodoForm;

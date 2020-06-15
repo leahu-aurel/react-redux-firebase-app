@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import NavBar from "./components/Navbar/NavBar";
 import Todos from "./components/Todos/Todos";
@@ -9,10 +9,12 @@ import SignUp from "./components/Auth/SignUp";
 import SignOut from "./components/Auth/SignOut";
 import About from "./components/About/About";
 import { fetchTodos } from "./redux/actions/actionCreators";
-let App = ({ user, fetchTodos }) => {
+
+export default () => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    user && fetchTodos(user);
-  }, [user, fetchTodos]);
+    dispatch(fetchTodos());
+  }, [dispatch]);
   return (
     <>
       <NavBar />
@@ -36,7 +38,3 @@ let App = ({ user, fetchTodos }) => {
     </>
   );
 };
-
-App = connect(({ user }) => ({ user }), { fetchTodos })(App);
-
-export default App;

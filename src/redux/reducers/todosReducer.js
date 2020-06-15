@@ -6,11 +6,12 @@ import {
   EDIT_TODO,
 } from "../actions/actions";
 
-export default (state = [], { type, text, id, todos, todo }) => {
+export default (state = [], { todos, type, text, id, todo }) => {
   switch (type) {
     case SET_TODOS:
       return todos;
     case ADD_TODO:
+      console.log(state);
       return [todo, ...state];
     case REMOVE_TODO:
       return state.filter((todo) => todo.id !== id);

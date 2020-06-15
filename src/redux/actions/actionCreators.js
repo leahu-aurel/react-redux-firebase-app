@@ -8,12 +8,10 @@ import {
   SET_TODOS,
   EDIT_TODO,
 } from "./actions";
-//useStore for user
 import { v4 } from "uuid";
 import { db } from "../../base";
 const user = JSON.parse(localStorage.getItem("isSignedIn"));
 const getTodoCollections = (userId) => {
-  console.log(userId);
   return db.collection("users").doc(userId).collection("todos");
 };
 const addTodo = (todo) => ({ type: ADD_TODO, todo });
@@ -39,16 +37,20 @@ export const editTodo = (id, text) => ({
 });
 
 export const fetchTodos = () => {
-  return (dispatch) => {
-    const userCollection = db
-      .collection("users")
-      .doc(user.uid)
-      .collection("todos");
-    userCollection.get().then((info) => {
-      const todos = info.docs.map((doc) => doc.data());
-      return dispatch(setTodos(todos));
-    });
-  };
+  if (user) {
+    return (dispatch) => {
+      const userCollection = db
+        .collection("users")
+        .doc(user.uid)
+        .collection("todos");
+      userCollection.get().then((info) => {
+        const todos = info.docs.map((doc) => doc.data());
+        return dispatch(setTodos(todos));
+      });
+    };
+  } else {
+    return setTodos([]);
+  }
 };
 
 export const addTodoOnServer = (text) => {
@@ -130,6 +132,6 @@ export const signOut = () => {
   };
   return (dispatch) => {
     dispatch(signOutAction);
-    dispatch(setTodos({}));
+    dispatch(setTodos([]));
   };
 };
