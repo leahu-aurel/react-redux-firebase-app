@@ -6,18 +6,17 @@ import {
   toggleTodo,
   signOut,
 } from "./syncActionCreators";
-
 import { v4 } from "uuid";
 import firebase, { db } from "../../base";
-const user = JSON.parse(localStorage.getItem("isSignedIn"));
 
 const getTodoCollections = (userId) => {
   return db.collection("users").doc(userId).collection("todos");
 };
 
 export const fetchTodos = () => {
-  if (user) {
-    return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (user) {
       const userCollection = db
         .collection("users")
         .doc(user.uid)
@@ -26,10 +25,10 @@ export const fetchTodos = () => {
         const todos = info.docs.map((doc) => doc.data());
         return dispatch(setTodos(todos));
       });
-    };
-  } else {
-    return setTodos([]);
-  }
+    } else {
+      return dispatch(setTodos([]));
+    }
+  };
 };
 
 export const addTodoOnServer = (text) => {
@@ -38,8 +37,9 @@ export const addTodoOnServer = (text) => {
     id: v4(),
     completed: false,
   };
-  if (user) {
-    return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (user) {
       const userCollection = getTodoCollections(user.uid);
       userCollection
         .doc(todo.id)
@@ -47,52 +47,55 @@ export const addTodoOnServer = (text) => {
         .then(() => {
           return dispatch(addTodo(todo));
         });
-    };
-  } else {
-    return addTodo(todo);
-  }
+    } else {
+      return dispatch(addTodo(todo));
+    }
+  };
 };
 
 export const removeTodoOnServer = (todoId) => {
-  if (user) {
-    return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (user) {
       const userCollection = getTodoCollections(user.uid);
       userCollection
         .doc(todoId)
         .delete()
         .then(() => dispatch(removeTodo(todoId)));
-    };
-  } else {
-    return removeTodo(todoId);
-  }
+    } else {
+      return dispatch(removeTodo(todoId));
+    }
+  };
 };
 
 export const toggleTodoOnServer = (id, completed) => {
-  if (user) {
-    return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (user) {
       const userCollection = getTodoCollections(user.uid);
       userCollection
         .doc(id)
         .update({ completed: !completed })
         .then(() => dispatch(toggleTodo(id)));
-    };
-  } else {
-    return toggleTodo(id);
-  }
+    } else {
+      return dispatch(toggleTodo(id));
+    }
+  };
 };
 
 export const editTodoOnServer = (id, text) => {
-  if (user) {
-    return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState();
+    if (user) {
       const userCollection = getTodoCollections(user.uid);
       userCollection
         .doc(id)
         .update({ text })
         .then(() => dispatch(editTodo(id, text)));
-    };
-  } else {
-    return editTodo(id, text);
-  }
+    } else {
+      return dispatch(editTodo(id, text));
+    }
+  };
 };
 
 export const signOutOnServer = () => {

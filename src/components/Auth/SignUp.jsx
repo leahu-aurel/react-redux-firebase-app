@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+
 import firebase from "../../base";
+
 import "./auth.css";
+import GoogleAuth from "./GoogleAuth";
 import Error from "./Error";
 
 export default () => {
@@ -50,8 +53,9 @@ export default () => {
         </label>
         <br />
         <button className="buttonContainer">Sign Up</button>
-        <Error error={error} />
       </form>
+      <GoogleAuth />
+      <Error error={error} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import NavBar from "./components/Navbar/NavBar";
 import Todos from "./components/Todos/Todos";
@@ -12,9 +12,10 @@ import { fetchTodos } from "./redux/actions/actionCreators";
 
 export default () => {
   const dispatch = useDispatch();
+  const user = useSelector(({ user }) => user);
   useEffect(() => {
     dispatch(fetchTodos());
-  }, [dispatch]);
+  }, [dispatch, user]);
   return (
     <>
       <NavBar />

@@ -4,6 +4,7 @@ import { signIn } from "../../redux/actions/syncActionCreators";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Error from "./Error";
+import GoogleAuth from "./GoogleAuth";
 import "./auth.css";
 
 export default () => {
@@ -42,8 +43,9 @@ export default () => {
         </label>
         <br />
         <button className="buttonContainer">Log in</button>
-        <Error error={error} />
       </form>
+      <GoogleAuth />
+      <Error error={error} />
     </div>
   );
 };
