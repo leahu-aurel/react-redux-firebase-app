@@ -17,11 +17,11 @@
 .todosContainer li * {
   padding: 14px;
 }
-span.closeButton {
+span.removeButton {
   float: right;
   padding: 0 5px;
 }
-span.closeButton:hover {
+span.removeButton:hover {
   background-color: gray;
   cursor: pointer;
 }

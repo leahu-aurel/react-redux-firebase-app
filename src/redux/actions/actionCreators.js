@@ -6,32 +6,24 @@ import {
   SIGN_IN,
   SIGN_OUT,
   SET_TODOS,
+  EDIT_TODO,
 } from "./actions";
-
+//useStore for user
 import { v4 } from "uuid";
 import { db } from "../../base";
-
-export const addTodo = (todo) => {
-  if (typeof todo === "string") {
-    todo = {
-      text: todo,
-      id: v4(),
-      completed: false,
-    };
-  }
-  console.log(todo);
-  return {
-    type: ADD_TODO,
-    todo,
-  };
+const user = JSON.parse(localStorage.getItem("isSignedIn"));
+const getTodoCollections = (userId) => {
+  console.log(userId);
+  return db.collection("users").doc(userId).collection("todos");
 };
+const addTodo = (todo) => ({ type: ADD_TODO, todo });
 
-export const toggleTodo = (id) => ({
+const toggleTodo = (id) => ({
   type: TOGGLE_TODO,
   id,
 });
 
-export const removeTodo = (id) => ({
+const removeTodo = (id) => ({
   type: REMOVE_TODO,
   id,
 });
@@ -40,8 +32,13 @@ export const setTodos = (todos) => ({
   type: SET_TODOS,
   todos,
 });
+export const editTodo = (id, text) => ({
+  type: EDIT_TODO,
+  id,
+  text,
+});
 
-export const fetchTodos = (user) => {
+export const fetchTodos = () => {
   return (dispatch) => {
     const userCollection = db
       .collection("users")
@@ -54,7 +51,7 @@ export const fetchTodos = (user) => {
   };
 };
 
-export const addTodoOnServer = (text, user) => {
+export const addTodoOnServer = (text) => {
   const todo = {
     text,
     id: v4(),
@@ -62,53 +59,65 @@ export const addTodoOnServer = (text, user) => {
   };
   if (user) {
     return (dispatch) => {
-      const userCollection = db
-        .collection("users")
-        .doc(user.uid)
-        .collection("todos");
+      const userCollection = getTodoCollections(user.uid);
       userCollection
         .doc(todo.id)
         .set(todo)
-        .then(() => dispatch(addTodo(todo)));
+        .then(() => {
+          return dispatch(addTodo(todo));
+        });
     };
   } else {
-    addTodo(todo);
+    return addTodo(todo);
   }
 };
 
-export const removeTodoOnServer = (userId, todoId) => {
-  return (dispatch) => {
-    const userCollection = db
-      .collection("users")
-      .doc(userId)
-      .collection("todos");
-    userCollection
-      .doc(todoId)
-      .delete()
-      .then(() => dispatch(removeTodo(todoId)));
-  };
+export const removeTodoOnServer = (todoId) => {
+  if (user) {
+    return (dispatch) => {
+      const userCollection = getTodoCollections(user.uid);
+      userCollection
+        .doc(todoId)
+        .delete()
+        .then(() => dispatch(removeTodo(todoId)));
+    };
+  } else {
+    return removeTodo(todoId);
+  }
 };
 
-export const toggleTodoOnServer = (userId, todoId, completed) => {
-  return (dispatch) => {
-    console.log(userId);
-    console.log(todoId);
-    console.log(completed);
-    const userCollection = db
-      .collection("users")
-      .doc(userId)
-      .collection("todos");
-    userCollection
-      .doc(todoId)
-      .update({ completed: !completed })
-      .then(() => dispatch(toggleTodo(todoId)));
-  };
+export const toggleTodoOnServer = (id, completed) => {
+  if (user) {
+    return (dispatch) => {
+      const userCollection = getTodoCollections(user.uid);
+      userCollection
+        .doc(id)
+        .update({ completed: !completed })
+        .then(() => dispatch(toggleTodo(id)));
+    };
+  } else {
+    return toggleTodo(id);
+  }
 };
 
 export const setVisibilityFilter = (filter) => ({
   type: SET_VISIBILITY_FILTER,
   filter,
 });
+
+export const editTodoOnServer = (id, text) => {
+  if (user) {
+    return (dispatch) => {
+      const userCollection = getTodoCollections(user.uid);
+      userCollection
+        .doc(id)
+        .update({ text })
+        .then(() => dispatch(editTodo(id, text)));
+    };
+  } else {
+    return editTodo(id, text);
+  }
+};
 
 export const signIn = (user) => ({
   type: SIGN_IN,
