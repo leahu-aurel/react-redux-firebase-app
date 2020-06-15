@@ -19,7 +19,7 @@ export default () => {
     <>
       <NavBar />
       <Switch>
-        <Route exact path="/(|home)">
+        <Route exact path="/(|all|left|completed)">
           <Todos />
         </Route>
         <Route exact path="/about">

@@ -1,40 +1,19 @@
 import {
-  ADD_TODO,
-  REMOVE_TODO,
-  TOGGLE_TODO,
-  SET_VISIBILITY_FILTER,
-  SIGN_IN,
-  SIGN_OUT,
-  SET_TODOS,
-  EDIT_TODO,
-} from "./actions";
+  addTodo,
+  setTodos,
+  editTodo,
+  removeTodo,
+  toggleTodo,
+  signOut,
+} from "./syncActionCreators";
+
 import { v4 } from "uuid";
-import { db } from "../../base";
+import firebase, { db } from "../../base";
 const user = JSON.parse(localStorage.getItem("isSignedIn"));
+
 const getTodoCollections = (userId) => {
   return db.collection("users").doc(userId).collection("todos");
 };
-const addTodo = (todo) => ({ type: ADD_TODO, todo });
-
-const toggleTodo = (id) => ({
-  type: TOGGLE_TODO,
-  id,
-});
-
-const removeTodo = (id) => ({
-  type: REMOVE_TODO,
-  id,
-});
-
-export const setTodos = (todos) => ({
-  type: SET_TODOS,
-  todos,
-});
-export const editTodo = (id, text) => ({
-  type: EDIT_TODO,
-  id,
-  text,
-});
 
 export const fetchTodos = () => {
   if (user) {
@@ -102,11 +81,6 @@ export const toggleTodoOnServer = (id, completed) => {
   }
 };
 
-export const setVisibilityFilter = (filter) => ({
-  type: SET_VISIBILITY_FILTER,
-  filter,
-});
-
 export const editTodoOnServer = (id, text) => {
   if (user) {
     return (dispatch) => {
@@ -121,17 +95,17 @@ export const editTodoOnServer = (id, text) => {
   }
 };
 
-export const signIn = (user) => ({
-  type: SIGN_IN,
-  user,
-});
-
-export const signOut = () => {
-  const signOutAction = {
-    type: SIGN_OUT,
-  };
+export const signOutOnServer = () => {
   return (dispatch) => {
-    dispatch(signOutAction);
-    dispatch(setTodos([]));
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(signOut());
+        dispatch(setTodos([]));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };

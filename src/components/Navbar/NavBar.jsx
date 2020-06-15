@@ -6,8 +6,8 @@ import "./navbar.css";
 let NavBar = ({ user }) => {
   return (
     <div className="navbar">
-      <Link to="/home">Todos Logo</Link>
-      <Link to="/home">Your todos</Link>
+      <Link to="/">Todos Logo</Link>
+      <Link to="/">Your todos</Link>
       <Link to="/about">About</Link>
       {user ? (
         <Link to="/sign_out" className="authlink">

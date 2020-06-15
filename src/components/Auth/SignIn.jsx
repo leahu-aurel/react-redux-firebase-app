@@ -1,27 +1,29 @@
 import React, { useRef, useState } from "react";
 import firebase from "../../base";
-import { signIn } from "../../redux/actions/actionCreators";
-import { connect } from "react-redux";
+import { signIn } from "../../redux/actions/syncActionCreators";
+import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Error from "./Error";
 import "./auth.css";
 
-let SignIn = ({ history, signIn }) => {
+let SignIn = ({ history }) => {
   const [error, setError] = useState("");
-
+  const dispatch = useDispatch();
   let login = useRef();
   let password = useRef();
+
   const submitHandle = (e) => {
     e.preventDefault();
     firebase
       .auth()
       .signInWithEmailAndPassword(login.current.value, password.current.value)
       .then(({ user }) => {
-        signIn(user);
+        dispatch(signIn(user));
         history.push("/");
       })
       .catch(({ message }) => setError(message));
   };
+
   return (
     <div className="authContainer">
       <br />
@@ -43,6 +45,6 @@ let SignIn = ({ history, signIn }) => {
   );
 };
 
-SignIn = withRouter(connect(null, { signIn })(SignIn));
+SignIn = withRouter(SignIn);
 
 export default SignIn;

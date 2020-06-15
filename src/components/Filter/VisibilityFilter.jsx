@@ -1,43 +1,33 @@
 import React from "react";
-import { connect } from "react-redux";
-import { setVisibilityFilter } from "../../redux/actions/actionCreators";
-import {
-  SHOW_ALL,
-  SHOW_COMPLETED,
-  SHOW_LEFT,
-} from "../../redux/actions/actions";
+import { SHOW_COMPLETED, SHOW_LEFT } from "../../redux/actions/actions";
+import { Link } from "react-router-dom";
 import "./visibility_filter.css";
 
-let VisibilityFilter = ({ visibilityFilter, setVisibilityFilter }) => (
+export default ({ filter }) => (
   <div className="filterContainer">
     <span>Filter:</span>
-    <span
-      className={visibilityFilter === SHOW_ALL ? "activeFilter" : "filter"}
-      onClick={() => setVisibilityFilter(SHOW_ALL)}
+    {"  "}
+    <Link
+      to="/all"
+      className={
+        filter === "/" || filter === "/all" ? "activeFilter" : "filter"
+      }
     >
       All
-    </span>
+    </Link>
     {", "}
-    <span
-      className={
-        visibilityFilter === SHOW_COMPLETED ? "activeFilter" : "filter"
-      }
-      onClick={() => setVisibilityFilter(SHOW_COMPLETED)}
+    <Link
+      to={SHOW_COMPLETED}
+      className={filter === SHOW_COMPLETED ? "activeFilter" : "filter"}
     >
       Completed
-    </span>
+    </Link>
     {", "}
-    <span
-      className={visibilityFilter === SHOW_LEFT ? "activeFilter" : "filter"}
-      onClick={() => setVisibilityFilter(SHOW_LEFT)}
+    <Link
+      to={SHOW_LEFT}
+      className={filter === SHOW_LEFT ? "activeFilter" : "filter"}
     >
       Left
-    </span>
+    </Link>
   </div>
 );
-
-VisibilityFilter = connect((state) => state, { setVisibilityFilter })(
-  VisibilityFilter
-);
-
-export default VisibilityFilter;
