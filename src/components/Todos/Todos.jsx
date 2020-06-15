@@ -8,7 +8,6 @@ import "./todos.css";
 import getVisibleTodos from "../../utils/getVisibleTodos";
 
 let Todos = ({ todos, user, filter }) => {
-  console.log(todos);
   return (
     <>
       {!user && (

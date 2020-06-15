@@ -2,13 +2,16 @@ import React, { useRef, useState } from "react";
 import firebase from "../../base";
 import { signIn } from "../../redux/actions/syncActionCreators";
 import { useDispatch } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Error from "./Error";
 import "./auth.css";
 
-let SignIn = ({ history }) => {
+export default () => {
   const [error, setError] = useState("");
+
   const dispatch = useDispatch();
+  const history = useHistory();
+
   let login = useRef();
   let password = useRef();
 
@@ -44,7 +47,3 @@ let SignIn = ({ history }) => {
     </div>
   );
 };
-
-SignIn = withRouter(SignIn);
-
-export default SignIn;

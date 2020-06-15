@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import firebase from "../../base";
 import "./auth.css";
 import Error from "./Error";
 
-let SignUp = ({ history }) => {
+export default () => {
   const [error, setError] = useState("");
+  const history = useHistory();
+
   let email = useRef();
   let password = useRef();
   let password2 = useRef();
@@ -53,7 +55,3 @@ let SignUp = ({ history }) => {
     </div>
   );
 };
-
-SignUp = withRouter(SignUp);
-
-export default SignUp;

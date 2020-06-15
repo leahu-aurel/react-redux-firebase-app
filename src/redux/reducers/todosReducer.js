@@ -11,7 +11,6 @@ export default (state = [], { todos, type, text, id, todo }) => {
     case SET_TODOS:
       return todos;
     case ADD_TODO:
-      console.log(state);
       return [todo, ...state];
     case REMOVE_TODO:
       return state.filter((todo) => todo.id !== id);

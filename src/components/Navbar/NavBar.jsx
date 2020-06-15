@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import "./navbar.css";
 
-let NavBar = ({ user }) => {
+export default () => {
+  const user = useSelector((state) => state.user);
   return (
     <div className="navbar">
       <Link to="/">Todos Logo</Link>
@@ -26,7 +27,3 @@ let NavBar = ({ user }) => {
     </div>
   );
 };
-
-NavBar = connect(({ user }) => ({ user }))(NavBar);
-
-export default NavBar;
